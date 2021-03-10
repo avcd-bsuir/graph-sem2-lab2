@@ -44,6 +44,10 @@ double Mat3::determinant() {
            this->data[5] * this->data[7] * this->data[0];
 }
 
+// Mat3 Mat3::adjoint() {
+//
+// }
+
 /*
  * Comparing
  */

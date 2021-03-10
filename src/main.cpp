@@ -26,8 +26,20 @@
 int main(int argc, char* args[]) {
     Engine engine("Template", WIDTH, HEIGHT, Color(0x0));
 
-    float a = 250.0f, l = 150.0f;
-    float t, x, y;
+    double a = 250.0f, l = 150.0f;
+    double t, x, y;
+    int mouse_x, mouse_y;
+
+    std::vector<Vec3> axes = { Vec3(-WIDTH, 0, 1), Vec3(WIDTH, 0, 1), Vec3(0, -HEIGHT, 1), Vec3(0, HEIGHT, 1) };
+
+    std::vector<Vec3> curve;
+    for (t = 0; t < 2 * 3.14159; t += 0.0001)
+        curve.push_back(Vec3(a * cos(t) * cos(t) + l * cos(t), a * cos(t) * sin(t) + l * sin(t), 1));
+
+    double angle = 0.0f;
+    Mat3 S(1, 0, 0, 0, 1, 0, 0, 0, 1);
+    Mat3 R(1, 0, 0, 0, 1, 0, 0, 0, 1);
+    Mat3 T(1, 0, 0, 0, 1, 0, 0, 0, 1);
 
     while (!engine.shouldExit()) {
         SDL_Event event;
@@ -35,6 +47,26 @@ int main(int argc, char* args[]) {
             if (event.type == SDL_KEYDOWN) {
                 switch (event.key.keysym.scancode) {
                     case SDL_SCANCODE_ESCAPE: engine.shutdown(); break;
+                    case SDL_SCANCODE_Z:
+                        angle += 0.01f;
+                        R = Mat3(std::cos(angle), std::sin(angle), 0, -std::sin(angle), std::cos(angle), 0, 0, 0, 1);
+                        break;
+                    case SDL_SCANCODE_X:
+                        angle -= 0.01f;
+                        R = Mat3(std::cos(angle), std::sin(angle), 0, -std::sin(angle), std::cos(angle), 0, 0, 0, 1);
+                        break;
+                    case SDL_SCANCODE_LEFT:
+                        S.data[0] -= 0.01f;
+                        break;
+                    case SDL_SCANCODE_RIGHT:
+                        S.data[0] += 0.01f;
+                        break;
+                    case SDL_SCANCODE_UP:
+                        S.data[4] -= 0.01f;
+                        break;
+                    case SDL_SCANCODE_DOWN:
+                        S.data[4] += 0.01f;
+                        break;
                     default: log("Event", "SDL_KEYDOWN event processed"); break;
                 }
             }
@@ -42,20 +74,24 @@ int main(int argc, char* args[]) {
 
         engine.clear();
 
+        SDL_GetMouseState(&mouse_x, &mouse_y);
+        T.data[2] = mouse_x;
+        T.data[5] = mouse_y;
+
         // Borders
-        for (int x = 0; x < WIDTH; x++) engine.setPixel(x, HEIGHT / 2, Color(0, 255, 0));
-        for (int y = 0; y < HEIGHT; y++) engine.setPixel(WIDTH / 2, y, Color(0, 255, 0));
+        drawLine(&engine, 0, HEIGHT / 2, WIDTH, HEIGHT / 2, Color(0, 255, 0, 100));
+        drawLine(&engine, WIDTH / 2, 0, WIDTH / 2, HEIGHT, Color(0, 255, 0, 100));
+        drawLine(&engine, S * (R * (T * axes[0])), S * (R * (T * axes[1])), Color(0, 255, 0));
+        drawLine(&engine, S * (R * (T * axes[2])), S * (R * (T * axes[3])), Color(0, 255, 0));
 
         // Curve
-        for (t = 0; t < 2 * 3.14159; t += 0.001) {
-            x = (a * cos(t) * cos(t) + l * cos(t)) + WIDTH / 2;
-            y = (a * cos(t) * sin(t) + l * sin(t)) + HEIGHT / 2;
-            if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT)
-                engine.setPixel((int)x, (int)y, Color(255, 0, 0));
+        for (int i = 0; i < curve.size(); i++) {
+            Vec3 pixel = S * (R * (T * curve[i]));
+            engine.setPixel(pixel.x, pixel.y, Color(255, 0, 0));
         }
 
         engine.draw();
-        SDL_Delay(16);
+        // SDL_Delay(16);
     }
     return 0;
 }

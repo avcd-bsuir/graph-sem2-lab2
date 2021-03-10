@@ -18,6 +18,7 @@ class Mat3 {
         ~Mat3();
 
         double determinant();
+        // Mat3 adjoint();
 };
 
 // Comapring
