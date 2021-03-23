@@ -49,14 +49,14 @@ checkSuccess() {
 }
 
 printf -- "\e[38;05;2;49;24;27m--\e[0m \e[38;05;2;49;04;27mStarting build process\e[0m\n"
-printf -- "\e[38;05;2;49;24;27m-- Compiler: \e[0m \e[38;05;3;49;04;27mg++\e[0m\n\n"
+printf -- "\e[38;05;2;49;24;27m-- Compiler: \e[0m \e[38;05;3;49;04;27mg++.exe\e[0m\n\n"
 
 recompile="False"
 printHeader src/Color.cpp
 checkRecomp src/Color.cpp build/src/Color.hash build/src/ build/src/Color.o 
 if [ $recompile == "True" ]
 then
-    g++ -c -std=c++17 -static-libstdc++ -static-libgcc -I"include/" -I"third-party/toolbox/" -L"lib/" src/Color.cpp -o build/src/Color.o 
+    g++.exe -c -std=c++17 -static-libstdc++ -static-libgcc -I"include/" -I"third-party/toolbox/" -I"C:\MinGW\include" -L"lib/" src/Color.cpp -o build/src/Color.o 
     checkSuccess build/src/Color.o build/src/Color.hash
     echo "$(md5sum src/Color.cpp)" > build/src/Color.hash
 fi
@@ -66,7 +66,7 @@ printHeader src/Engine.cpp
 checkRecomp src/Engine.cpp build/src/Engine.hash build/src/ build/src/Engine.o 
 if [ $recompile == "True" ]
 then
-    g++ -c -std=c++17 -static-libstdc++ -static-libgcc -I"include/" -I"third-party/toolbox/" -L"lib/" src/Engine.cpp -o build/src/Engine.o 
+    g++.exe -c -std=c++17 -static-libstdc++ -static-libgcc -I"include/" -I"third-party/toolbox/" -I"C:\MinGW\include" -L"lib/" src/Engine.cpp -o build/src/Engine.o 
     checkSuccess build/src/Engine.o build/src/Engine.hash
     echo "$(md5sum src/Engine.cpp)" > build/src/Engine.hash
 fi
@@ -76,7 +76,7 @@ printHeader src/Mat3.cpp
 checkRecomp src/Mat3.cpp build/src/Mat3.hash build/src/ build/src/Mat3.o 
 if [ $recompile == "True" ]
 then
-    g++ -c -std=c++17 -static-libstdc++ -static-libgcc -I"include/" -I"third-party/toolbox/" -L"lib/" src/Mat3.cpp -o build/src/Mat3.o 
+    g++.exe -c -std=c++17 -static-libstdc++ -static-libgcc -I"include/" -I"third-party/toolbox/" -I"C:\MinGW\include" -L"lib/" src/Mat3.cpp -o build/src/Mat3.o 
     checkSuccess build/src/Mat3.o build/src/Mat3.hash
     echo "$(md5sum src/Mat3.cpp)" > build/src/Mat3.hash
 fi
@@ -86,7 +86,7 @@ printHeader src/primitives.cpp
 checkRecomp src/primitives.cpp build/src/primitives.hash build/src/ build/src/primitives.o 
 if [ $recompile == "True" ]
 then
-    g++ -c -std=c++17 -static-libstdc++ -static-libgcc -I"include/" -I"third-party/toolbox/" -L"lib/" src/primitives.cpp -o build/src/primitives.o 
+    g++.exe -c -std=c++17 -static-libstdc++ -static-libgcc -I"include/" -I"third-party/toolbox/" -I"C:\MinGW\include" -L"lib/" src/primitives.cpp -o build/src/primitives.o 
     checkSuccess build/src/primitives.o build/src/primitives.hash
     echo "$(md5sum src/primitives.cpp)" > build/src/primitives.hash
 fi
@@ -96,7 +96,7 @@ printHeader src/utils.cpp
 checkRecomp src/utils.cpp build/src/utils.hash build/src/ build/src/utils.o 
 if [ $recompile == "True" ]
 then
-    g++ -c -std=c++17 -static-libstdc++ -static-libgcc -I"include/" -I"third-party/toolbox/" -L"lib/" src/utils.cpp -o build/src/utils.o 
+    g++.exe -c -std=c++17 -static-libstdc++ -static-libgcc -I"include/" -I"third-party/toolbox/" -I"C:\MinGW\include" -L"lib/" src/utils.cpp -o build/src/utils.o 
     checkSuccess build/src/utils.o build/src/utils.hash
     echo "$(md5sum src/utils.cpp)" > build/src/utils.hash
 fi
@@ -106,7 +106,7 @@ printHeader src/Vec3.cpp
 checkRecomp src/Vec3.cpp build/src/Vec3.hash build/src/ build/src/Vec3.o 
 if [ $recompile == "True" ]
 then
-    g++ -c -std=c++17 -static-libstdc++ -static-libgcc -I"include/" -I"third-party/toolbox/" -L"lib/" src/Vec3.cpp -o build/src/Vec3.o 
+    g++.exe -c -std=c++17 -static-libstdc++ -static-libgcc -I"include/" -I"third-party/toolbox/" -I"C:\MinGW\include" -L"lib/" src/Vec3.cpp -o build/src/Vec3.o 
     checkSuccess build/src/Vec3.o build/src/Vec3.hash
     echo "$(md5sum src/Vec3.cpp)" > build/src/Vec3.hash
 fi
@@ -117,7 +117,7 @@ checkRecomp src/main.cpp build/src/main.hash build/src/ build/src/main.out
 if [ $recompile == "True" ] || [ $main_should_recompile == "True" ]
 then
     printf -- "..... \e[38;05;3;49;04;27mmain.cpp\e[0m \e[38;05;10;49;24;27mis updating, because other files have changed\e[0m\n"
-    g++ -std=c++17 -static-libstdc++ -static-libgcc -I"include/" -I"third-party/toolbox/" -L"lib/" src/main.cpp -o build/src/main.out build/src/Color.o build/src/Engine.o build/src/Mat3.o build/src/primitives.o build/src/utils.o build/src/Vec3.o -lpthread -lSDL2main -lSDL2
+    g++.exe -std=c++17 -static-libstdc++ -static-libgcc -I"include/" -I"third-party/toolbox/" -I"C:\MinGW\include" -L"lib/" src/main.cpp -o build/src/main.out build/src/Color.o build/src/Engine.o build/src/Mat3.o build/src/primitives.o build/src/utils.o build/src/Vec3.o -lpthread -lmingw32 -lSDL2main -lSDL2
     checkSuccess build/src/main.out build/src/main.hash
     echo "$(md5sum src/main.cpp)" > build/src/main.hash
 fi

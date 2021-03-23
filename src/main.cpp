@@ -81,12 +81,15 @@ int main(int argc, char* args[]) {
         // Borders
         drawLine(&engine, 0, HEIGHT / 2, WIDTH, HEIGHT / 2, Color(0, 255, 0, 100));
         drawLine(&engine, WIDTH / 2, 0, WIDTH / 2, HEIGHT, Color(0, 255, 0, 100));
-        drawLine(&engine, S * (R * (T * axes[0])), S * (R * (T * axes[1])), Color(0, 255, 0));
-        drawLine(&engine, S * (R * (T * axes[2])), S * (R * (T * axes[3])), Color(0, 255, 0));
+
+        drawLine(&engine, T * (S * (R * axes[0])), T * (S * (R * axes[1])), Color(0, 255, 0));
+        // drawLine(&engine, S * (R * (T * axes[0])), S * (R * (T * axes[1])), Color(0, 255, 0));
+        drawLine(&engine, T * (S * (R * axes[2])), T * (S * (R * axes[3])), Color(0, 255, 0));
+        // drawLine(&engine, S * (R * (T * axes[2])), S * (R * (T * axes[3])), Color(0, 255, 0));
 
         // Curve
         for (int i = 0; i < curve.size(); i++) {
-            Vec3 pixel = S * (R * (T * curve[i]));
+            Vec3 pixel = T * (S * (R * curve[i]));
             engine.setPixel(pixel.x, pixel.y, Color(255, 0, 0));
         }
 
