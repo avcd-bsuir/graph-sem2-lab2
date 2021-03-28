@@ -1,7 +1,5 @@
 [![License](https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-blue.svg)](https://bit.ly/cc-by-nc-sa-40)
 
-# Template repository
-
 # Usage
 
 To compile and run a program use:
@@ -20,9 +18,9 @@ $ ./build.sh
 
 Executable will be started automatically. It can be found in `bin/` folder.
 
-# Semester \<#\> lab \<#\>
+# Semester \<2\> lab \<2\>
 
-
+Матрицы
 
 # Credits
 
